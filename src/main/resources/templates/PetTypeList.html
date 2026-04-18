@@ -11,43 +11,70 @@ layout:decorate="~{layout}">
 
 <section layout:fragment="page-content">
 <div class="container">
-<p>
-<h1><i class="bi bi-wrench"></i> Pet types</h1>
-</p>
-<table class="table table-bordered table-striped">
-<thead>
-	<tr>
-		<th>N°</th>
-		<th>Name</th>
-		<th>Action</th>
-	</tr>
-</thead>
-<tbody>
-	<tr th:each="p : ${petTypes}">
-		<td>[[${p.Id}]]</td>
-		<td>[[${p.Name}]]</td>
-		<td>
-			<form th:action="@{/pet/types/delete/{Id}(Id=${p.Id})}" method="post">
-			<a class="btn btn-success btn-sm" th:href="@{/pet/types/{Id}(Id=${p.Id})}"><i class="bi bi-pencil-square"></i> Edit</a>
-			<button class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Delete</button>
-			</form>
-		</td>
-	</tr>
-</tbody>
-</table>
+    <div class="mb-4">
+        <h1><i class="bi bi-tags"></i> Pet Types</h1>
+    </div>
 
-<hr/>
-<p><h2>Add new pet type</h2></p>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card p-0 overflow-hidden mb-4">
+                <div class="card-header" style="background: linear-gradient(90deg, #9c27b0, #e91e63); color: white;">
+                    <h5 class="mb-0">
+                        <i class="bi bi-list-ul"></i> Existing Types
+                    </h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th><i class="bi bi-hash"></i> ID</th>
+                                <th><i class="bi bi-tag"></i> Name</th>
+                                <th><i class="bi bi-gear"></i> Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="p : ${petTypes}">
+                                <td style="font-weight: 600; color: #9c27b0;">[[${p.Id}]]</td>
+                                <td>
+                                    <span class="badge" style="background: linear-gradient(90deg, #9c27b0, #e91e63); padding: 8px 16px; border-radius: 20px;">
+                                        [[${p.Name}]]
+                                    </span>
+                                </td>
+                                <td>
+                                    <form th:action="@{/pet/types/delete/{Id}(Id=${p.Id})}" method="post" class="d-inline">
+                                    <a class="btn btn-success btn-sm me-1" th:href="@{/pet/types/{Id}(Id=${p.Id})}">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this pet type?');">
+                                        <i class="bi bi-trash3"></i> Delete
+                                    </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-<form class="row" th:action="@{/pet/types/add}" method="post">
-  <div class="col-md-4">
-    <input type="text" class="form-control" name="Name" required placeholder="Name">
-  </div>
-  
-  <div class="col-md-4">
-    <button class="btn btn-primary" type="submit">Add new type</button>
-  </div>
-</form>
+        <div class="col-lg-4">
+            <div class="card p-4">
+                <h5 class="mb-3" style="color: #9c27b0;">
+                    <i class="bi bi-plus-circle"></i> Add New Type
+                </h5>
+                <form th:action="@{/pet/types/add}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Type Name</label>
+                        <input type="text" class="form-control" name="Name" required placeholder="e.g. Dog, Cat, Bird">
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">
+                        <i class="bi bi-plus-circle"></i> Add Type
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 </section>

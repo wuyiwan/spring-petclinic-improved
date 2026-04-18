@@ -10,105 +10,137 @@
 
     <section layout:fragment="page-content">
         <div class="container">
-            <p>
-            <h1><i class="bi bi-calendar4-event"></i> Select appointment</h1>
-            </p>
+            <div class="mb-4">
+                <h1><i class="bi bi-calendar4-event"></i> Select Appointment</h1>
+            </div>
 
-            <p>
-            <form class="row g-3">
-                <div class="col-md-2">
-                    <label for="VetId" class="form-label">Veterinary</label>
-                    <select name="VetId" id="VetId" class="form-select">
-                        <option value="0">Any</option>
-                        <option th:each="v : ${vets}" 
-                            th:text="|Dr ${v.FirstName} ${v.LastName}|" 
-                            th:value="${v.Id}"
-                            th:selected="${VetId == v.Id}"></option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="From" class="form-label">From (Date)</label>
-                    <input type="text" class="form-control datepicker" id="From"
-                        th:value="*{#temporals.format(Day, 'MM/dd/yyyy')}" name="Day">
-                </div>
-                <div class="col-md-2">
-                    <label for="hMin" class="form-label">Min Hour</label>
-                    <select name="hMin" id="hMin" class="form-select">
-                        <option th:each="h : ${hours}" 
-                                th:value="${h}" 
-                                th:text="${h}"
-                                th:selected="${hMin == h}"></option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="hMin" class="form-label">Max Hour</label>
-                    <select name="hMax" id="hMax" class="form-select">
-                        <option value="19:00">19:00</option>
-                        <option th:each="h : ${hours}" 
-                                th:value="${h}" 
-                                th:text="${h}"
-                                th:selected="${hMax == h}"></option>
-                    </select>
-                </div>
-                <div class="col-12">
-                    <th:block th:each="d : ${dayNames}">
-                    <input class="form-check-input" type="checkbox" 
-                        th:id="${d.name}" name="dow[]" 
-                        th:value="${d.value}" 
-                        th:checked="${#arrays.contains(dow, d.value)}">
-                    <label class="form-check-label" th:for="${d.name}">
-                        [[${d}]]
-                    </label>
-                    </th:block>
-                </div>
-                <div class="col-auto">
-                  <button type="submit" class="btn btn-primary">
-                      <i class="bi bi-search"></i>
-                      Search
-                  </button>
-                </div>
-            </form>
-            </p>
+            <div class="card p-4 mb-4">
+                <h5 class="mb-3" style="color: #1976d2;">
+                    <i class="bi bi-funnel"></i> Filter Options
+                </h5>
+                <form class="row g-4">
+                    <div class="col-md-3">
+                        <label for="VetId" class="form-label">
+                            <i class="bi bi-person-circle" style="color: #1976d2;"></i> Veterinarian
+                        </label>
+                        <select name="VetId" id="VetId" class="form-select">
+                            <option value="0">Any</option>
+                            <option th:each="v : ${vets}" 
+                                th:text="|Dr ${v.FirstName} ${v.LastName}|" 
+                                th:value="${v.Id}"
+                                th:selected="${VetId == v.Id}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="From" class="form-label">
+                            <i class="bi bi-calendar" style="color: #1976d2;"></i> From (Date)
+                        </label>
+                        <input type="text" class="form-control datepicker" id="From"
+                            th:value="*{#temporals.format(Day, 'MM/dd/yyyy')}" name="Day"
+                            placeholder="Select date">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="hMin" class="form-label">
+                            <i class="bi bi-clock" style="color: #1976d2;"></i> Min Hour
+                        </label>
+                        <select name="hMin" id="hMin" class="form-select">
+                            <option th:each="h : ${hours}" 
+                                    th:value="${h}" 
+                                    th:text="${h}"
+                                    th:selected="${hMin == h}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="hMax" class="form-label">
+                            <i class="bi bi-clock-history" style="color: #1976d2;"></i> Max Hour
+                        </label>
+                        <select name="hMax" id="hMax" class="form-select">
+                            <option value="19:00">19:00</option>
+                            <option th:each="h : ${hours}" 
+                                    th:value="${h}" 
+                                    th:text="${h}"
+                                    th:selected="${hMax == h}"></option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label mb-2">
+                            <i class="bi bi-calendar-week" style="color: #1976d2;"></i> Days of Week
+                        </label>
+                        <div class="d-flex flex-wrap gap-4">
+                            <th:block th:each="d : ${dayNames}">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" 
+                                    th:id="${d.name}" name="dow[]" 
+                                    th:value="${d.value}" 
+                                    th:checked="${#arrays.contains(dow, d.value)}">
+                                <label class="form-check-label" th:for="${d.name}" style="font-weight: 500;">
+                                    [[${d}]]
+                                </label>
+                            </div>
+                            </th:block>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-primary px-5">
+                            <i class="bi bi-search"></i>
+                            Search Appointments
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Day</th>
-                        <th>Date</th>
-                        <th>Hour</th>
-                        <th>Veterinary</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="avail : ${availabilities}">
-                        <td>[[${#temporals.dayOfWeekName(avail.app)}]]</td>
-                        <td>[[${#temporals.monthName(avail.app)}]] the [[${#temporals.day(avail.app)}]]th, [[${#temporals.year(avail.app)}]]</td>
-                        <td>[[${#numbers.formatInteger(#temporals.hour(avail.app),2)}]]:[[${#numbers.formatInteger(#temporals.minute(avail.app), 2)}]]</td>
-                        <td th:text="|Dr ${avail.FirstName} ${avail.LastName}|"></td>
-                        <td>
-                            <form th:action="@{/appointment/select}" method="post">
-                                <input type="hidden" name="VetId" th:value="${avail.VetId}">
-                                <input type="hidden" name="App" th:value="${avail.app}">
-                                <button class="btn btn-success btn-sm"><i class="bi bi-check2"></i> Select</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr th:unless="${not #lists.isEmpty(availabilities)}">
-                        <td colspan="4">No availabilities found in the next 12 months</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="card p-0 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th><i class="bi bi-calendar-week"></i> Day</th>
+                                <th><i class="bi bi-calendar-date"></i> Date</th>
+                                <th><i class="bi bi-clock"></i> Hour</th>
+                                <th><i class="bi bi-person-circle"></i> Veterinarian</th>
+                                <th><i class="bi bi-gear"></i> Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="avail : ${availabilities}">
+                                <td style="font-weight: 500;">[[${#temporals.dayOfWeekName(avail.app)}]]</td>
+                                <td>[[${#temporals.monthName(avail.app)}]] the [[${#temporals.day(avail.app)}]]th, [[${#temporals.year(avail.app)}]]</td>
+                                <td style="font-weight: 600; color: #1976d2;">
+                                    [[${#numbers.formatInteger(#temporals.hour(avail.app),2)}]]:[[${#numbers.formatInteger(#temporals.minute(avail.app), 2)}]]
+                                </td>
+                                <td th:text="|Dr ${avail.FirstName} ${avail.LastName}|" style="font-weight: 500;"></td>
+                                <td>
+                                    <form th:action="@{/appointment/select}" method="post">
+                                        <input type="hidden" name="VetId" th:value="${avail.VetId}">
+                                        <input type="hidden" name="App" th:value="${avail.app}">
+                                        <button class="btn btn-success btn-sm">
+                                            <i class="bi bi-check2-circle"></i> Select
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:unless="${not #lists.isEmpty(availabilities)}">
+                                <td colspan="5" class="text-center py-5">
+                                    <i class="bi bi-calendar-x" style="font-size: 3rem; color: #90a4ae;"></i>
+                                    <p class="text-muted mt-3 mb-0">No availabilities found in the next 12 months</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-            <nav>
-                <ul class="pagination">
-                    <li th:each="page : ${pages}" class="page-item" th:classappend="${page.htmlClass}">
-                        <a th:href="${page.url}" class="page-link">
-                            [[${page.displayName}]]
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="d-flex justify-content-center mt-4">
+                <nav>
+                    <ul class="pagination">
+                        <li th:each="page : ${pages}" class="page-item" th:classappend="${page.htmlClass}">
+                            <a th:href="${page.url}" class="page-link">
+                                [[${page.displayName}]]
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
 
         </div>
 

@@ -10,40 +10,142 @@
 
     <section layout:fragment="page-content">
         <div class="container">
-            <p>
-            <h1><i class="bi bi-house"></i> Home</h1>
-            </p>
+            <div class="text-center mb-5">
+                <h1 style="display: inline-block; border-bottom: none; margin-bottom: 0;">
+                    <i class="bi bi-heart-pulse" style="color: #e53935;"></i> Welcome to Petclinic
+                </h1>
+                <p class="text-muted mt-3" style="font-size: 1.1rem;">Your trusted partner in pet healthcare</p>
+            </div>
 
             <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${message}">
+                <i class="bi bi-check-circle-fill"></i>
                 <strong>Success!</strong> [[${message}]]
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
-            <p>
-                There are
-                <a href="/veterinaries"
-                    class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2">
-                    [[${vets.size()}]]
-                </a> veterinaries at the clinic :
+            <div class="row g-4 mb-5">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-icon" style="color: #e91e63;">
+                            <i class="bi bi-person-heart"></i>
+                        </div>
+                        <div class="stats-number">[[${counts.clients}]]</div>
+                        <div class="stats-label">Happy Clients</div>
+                        <a href="/clients" class="btn btn-outline-primary btn-sm mt-3" style="border-radius: 20px;">
+                            <i class="bi bi-arrow-right-circle"></i> View All
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-icon" style="color: #9c27b0;">
+                            <i class="bi bi-paw-fill"></i>
+                        </div>
+                        <div class="stats-number">[[${counts.pets}]]</div>
+                        <div class="stats-label">Pets Registered</div>
+                        <a href="/pets" class="btn btn-outline-primary btn-sm mt-3" style="border-radius: 20px;">
+                            <i class="bi bi-arrow-right-circle"></i> View All
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-icon" style="color: #673ab7;">
+                            <i class="bi bi-calendar2-check-fill"></i>
+                        </div>
+                        <div class="stats-number">[[${counts.appointments}]]</div>
+                        <div class="stats-label">Appointments</div>
+                        <a href="/schedule" class="btn btn-outline-primary btn-sm mt-3" style="border-radius: 20px;">
+                            <i class="bi bi-arrow-right-circle"></i> View Schedule
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-icon" style="color: #3f51b5;">
+                            <i class="bi bi-person-badge-fill"></i>
+                        </div>
+                        <div class="stats-number">[[${vets.size()}]]</div>
+                        <div class="stats-label">Expert Veterinarians</div>
+                        <a href="/veterinaries" class="btn btn-outline-primary btn-sm mt-3" style="border-radius: 20px;">
+                            <i class="bi bi-arrow-right-circle"></i> Meet Them
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-            <ul>
-                <li th:each="v : ${vets}" th:text="|Dr ${v.FirstName} ${v.LastName}|"></li>
-            </ul>
-            </p>
+            <div class="card p-4">
+                <h4 class="mb-4" style="color: #1976d2;">
+                    <i class="bi bi-person-plus" style="color: #4caf50;"></i> Our Veterinary Team
+                </h4>
+                <div class="row g-3">
+                    <div class="col-md-4" th:each="v : ${vets}">
+                        <div class="card" style="background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); border: none;">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="bi bi-person-circle" style="font-size: 3rem; color: #2196f3;"></i>
+                                </div>
+                                <h5 class="card-title" style="color: #1976d2; font-weight: 600;">
+                                    Dr [[${v.FirstName}]] [[${v.LastName}]]
+                                </h5>
+                                <p class="card-text text-muted" style="font-size: 0.9rem;">
+                                    <i class="bi bi-star-fill" style="color: #ffc107;"></i>
+                                    <i class="bi bi-star-fill" style="color: #ffc107;"></i>
+                                    <i class="bi bi-star-fill" style="color: #ffc107;"></i>
+                                    <i class="bi bi-star-fill" style="color: #ffc107;"></i>
+                                    <i class="bi bi-star-fill" style="color: #ffc107;"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <p>
-                There are
-                <a href="/clients" class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2">
-                    [[${counts.clients}]]
-                </a> clients,
-                <a href="/pets" class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2">
-                    [[${counts.pets}]]
-                </a> pets and
-                <a href="/schedule" class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2">
-                    [[${counts.appointments}]]
-                </a> appointments registered.
-
-            </p>
+            <div class="row g-4 mt-5">
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5 class="mb-3" style="color: #e91e63;">
+                            <i class="bi bi-calendar-plus-fill"></i> Quick Actions
+                        </h5>
+                        <div class="d-grid gap-3">
+                            <a href="/appointments/new" class="btn btn-primary">
+                                <i class="bi bi-calendar4-event"></i> Book New Appointment
+                            </a>
+                            <a href="/clients/add" class="btn btn-success">
+                                <i class="bi bi-person-plus-fill"></i> Add New Client
+                            </a>
+                            <a href="/pets/add" class="btn btn-info text-white">
+                                <i class="bi bi-paw-fill"></i> Add New Pet
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5 class="mb-3" style="color: #673ab7;">
+                            <i class="bi bi-info-circle-fill"></i> Clinic Info
+                        </h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" style="border: none; background: transparent;">
+                                <i class="bi bi-clock" style="color: #2196f3;"></i>
+                                <strong>Hours:</strong> Monday - Friday, 9:00 - 18:00
+                            </li>
+                            <li class="list-group-item" style="border: none; background: transparent;">
+                                <i class="bi bi-telephone" style="color: #4caf50;"></i>
+                                <strong>Phone:</strong> +1 (555) 123-4567
+                            </li>
+                            <li class="list-group-item" style="border: none; background: transparent;">
+                                <i class="bi bi-envelope" style="color: #e91e63;"></i>
+                                <strong>Email:</strong> contact@petclinic.com
+                            </li>
+                            <li class="list-group-item" style="border: none; background: transparent;">
+                                <i class="bi bi-geo-alt" style="color: #ff5722;"></i>
+                                <strong>Location:</strong> 123 Pet Street, Animal City
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
         </div>
 

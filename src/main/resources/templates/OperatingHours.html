@@ -17,52 +17,87 @@
 
     <section layout:fragment="page-content">
         <div class="container">
-            <p>
-            <h1><i class="bi bi-clock"></i> Operating hours</h1>
-            </p>
+            <div class="mb-4">
+                <h1><i class="bi bi-clock"></i> Operating Hours</h1>
+            </div>
 
-            <ul class="nav nav-tabs mb-2">
-
-                <li th:each="vet : ${vets}" th:class="'nav-item'">
-                    <a class="nav-link" 
-                    th:href="@{/hours/{Id}(Id=${vet.Id})}"
-                    th:classappend="${vet.Id} == ${Id} ? 'active' : ''">
-                        Dr [[${vet.FirstName}]] [[${vet.LastName}]]</a>
-                </li>
-                
-            </ul>
+            <div class="card p-4 mb-4">
+                <h5 class="mb-3" style="color: #1976d2;">
+                    <i class="bi bi-person-circle"></i> Select Veterinarian
+                </h5>
+                <ul class="nav nav-tabs mb-0">
+                    <li th:each="vet : ${vets}" th:class="'nav-item'">
+                        <a class="nav-link" 
+                        th:href="@{/hours/{Id}(Id=${vet.Id})}"
+                        th:classappend="${vet.Id} == ${Id} ? 'active' : ''">
+                            <i class="bi bi-person-circle"></i> Dr [[${vet.FirstName}]] [[${vet.LastName}]]
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
             <form th:action="@{/hours/{Id}(Id=${Id})}" method="post">
-                <table class="table table-bordered table-striped table-sm fs-6">
-                    <thead>
-                        <tr>
-                            <th>Hour</th>
-                            <th>Monday</th>
-                            <th>Tuesday</th>
-                            <th>Wednesday</th>
-                            <th>Thursday</th>
-                            <th>Friday</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr th:each="days : ${DayHourSlot}">
-                            <td>[[${days.HourLabel}]]</td>
-                            <td th:each="d : ${days.data}">
-                                <label>
-                                    <input type="checkbox" th:checked="${d.enabled}" th:name="|${d.Hour}-${d.Day}|" />
-                                </label>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="6">
-                                <button class="btn btn-primary">Submit</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="card p-0 overflow-hidden">
+                    <div class="card-header" style="background: linear-gradient(90deg, #1976d2, #2196f3); color: white;">
+                        <h5 class="mb-0">
+                            <i class="bi bi-calendar-week"></i> Weekly Schedule
+                        </h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th><i class="bi bi-clock"></i> Hour</th>
+                                    <th><i class="bi bi-calendar"></i> Monday</th>
+                                    <th><i class="bi bi-calendar"></i> Tuesday</th>
+                                    <th><i class="bi bi-calendar"></i> Wednesday</th>
+                                    <th><i class="bi bi-calendar"></i> Thursday</th>
+                                    <th><i class="bi bi-calendar"></i> Friday</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="days : ${DayHourSlot}">
+                                    <td style="font-weight: 600; color: #1976d2; background: rgba(227, 242, 253, 0.8);">
+                                        [[${days.HourLabel}]]
+                                    </td>
+                                    <td th:each="d : ${days.data}" class="text-center">
+                                        <div class="form-check form-switch d-flex justify-content-center">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                th:checked="${d.enabled}" th:name="|${d.Hour}-${d.Day}|"
+                                                style="width: 50px; height: 25px; cursor: pointer;">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer text-center p-4" style="background: rgba(227, 242, 253, 0.5);">
+                        <button type="submit" class="btn btn-primary px-5">
+                            <i class="bi bi-check-circle"></i> Save Schedule
+                        </button>
+                    </div>
+                </div>
             </form>
+
+            <div class="card mt-4 p-4">
+                <h6 class="mb-3" style="color: #1976d2; font-weight: 600;">
+                    <i class="bi bi-info-circle"></i> How to Use
+                </h6>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle-fill" style="color: #4caf50;"></i>
+                        <span class="text-muted ms-2">Toggle the switch to mark available hours</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle-fill" style="color: #4caf50;"></i>
+                        <span class="text-muted ms-2">Blue switch = Available | Gray switch = Unavailable</span>
+                    </li>
+                    <li>
+                        <i class="bi bi-check-circle-fill" style="color: #4caf50;"></i>
+                        <span class="text-muted ms-2">Click "Save Schedule" to apply changes</span>
+                    </li>
+                </ul>
+            </div>
 
         </div>
     </section>

@@ -11,34 +11,57 @@ layout:decorate="~{layout}">
 
 <section layout:fragment="page-content">
 <div class="container">
-<p>
-<h1>Add a client</h1>
-</p>
+    <div class="mb-4">
+        <h1><i class="bi bi-person-plus"></i> Add a Client</h1>
+    </div>
 
-<p>
-<form class="row g-3" th:object="${client}" method="post" th:action="@{/clients/add}">
-  <div class="col-md-6">
-    <label for="inputFirstName" class="form-label">First Name</label>
-    <input type="text" class="form-control" id="inputFirstName" th:value="*{FirstName}" name="FirstName">
-  </div>
-  <div class="col-md-6">
-    <label for="inputLastName" class="form-label">Last Name</label>
-    <input type="text" class="form-control" id="inputLastName" th:value="*{LastName}" name="LastName">
-  </div>
-  <div class="col-md-6">
-    <label for="inputEmail" class="form-label">Email</label>
-    <input type="text" class="form-control" id="inputEmail" th:value="*{Email}" name="Email">
-  </div>
-  <div class="col-md-6">
-    <label for="inputBirthDate" class="form-label">Birth date</label>
-    <input type="text" class="form-control datepicker" id="inputBirthDate" 
-      th:value="*{#temporals.format(BirthDate, 'MM/dd/yyyy')}" name="BirthDate">
-  </div>
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </div>
-</form>
-</p>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card p-5">
+                <form class="row g-4" th:object="${client}" method="post" th:action="@{/clients/add}">
+                    <div class="col-md-6">
+                        <label for="inputFirstName" class="form-label">
+                            <i class="bi bi-person" style="color: #1976d2;"></i> First Name
+                        </label>
+                        <input type="text" class="form-control" id="inputFirstName" th:value="*{FirstName}" name="FirstName"
+                            placeholder="Enter first name">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputLastName" class="form-label">
+                            <i class="bi bi-person-fill" style="color: #1976d2;"></i> Last Name
+                        </label>
+                        <input type="text" class="form-control" id="inputLastName" th:value="*{LastName}" name="LastName"
+                            placeholder="Enter last name">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputEmail" class="form-label">
+                            <i class="bi bi-envelope" style="color: #1976d2;"></i> Email
+                        </label>
+                        <input type="email" class="form-control" id="inputEmail" th:value="*{Email}" name="Email"
+                            placeholder="Enter email address">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputBirthDate" class="form-label">
+                            <i class="bi bi-calendar" style="color: #1976d2;"></i> Birth Date
+                        </label>
+                        <input type="text" class="form-control datepicker" id="inputBirthDate" 
+                            th:value="*{#temporals.format(BirthDate, 'MM/dd/yyyy')}" name="BirthDate"
+                            placeholder="Select date">
+                    </div>
+                    <div class="col-12 mt-4">
+                        <div class="d-flex gap-3">
+                            <button type="submit" class="btn btn-primary px-5">
+                                <i class="bi bi-check-circle"></i> Save Client
+                            </button>
+                            <a href="/clients" class="btn btn-outline-secondary px-5" style="border-radius: 25px;">
+                                <i class="bi bi-arrow-left"></i> Cancel
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </div>
 

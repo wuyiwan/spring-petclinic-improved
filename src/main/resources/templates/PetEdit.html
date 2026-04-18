@@ -10,29 +10,46 @@
 
     <section layout:fragment="page-content">
         <div class="container">
-            <p>
-            <h1>Pet</h1>
-            </p>
+            <div class="mb-4">
+                <h1><i class="bi bi-pencil-square"></i> Edit Pet</h1>
+            </div>
 
-            <p>
-            <form class="row g-3" th:object="${pet}" method="post"
-                th:action="@{/pets/edit/{Id}(Id=${pet.Id})}">
-                <div class="col-auto">
-                    <label for="inputName" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="inputName" th:field="*{Name}">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card p-5">
+                        <form class="row g-4" th:object="${pet}" method="post"
+                            th:action="@{/pets/edit/{Id}(Id=${pet.Id})}">
+                            <div class="col-md-6">
+                                <label for="inputName" class="form-label">
+                                    <i class="bi bi-paw" style="color: #9c27b0;"></i> Pet Name
+                                </label>
+                                <input type="text" class="form-control" id="inputName" th:field="*{Name}"
+                                    placeholder="Enter pet name">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pettype" class="form-label">
+                                    <i class="bi bi-tag" style="color: #9c27b0;"></i> Pet Type
+                                </label>
+                                <select name="PetTypeId" id="pettype" class="form-select">
+                                    <option th:each="p : ${petTypes}" th:text="${p.Name}" th:selected="${p.Id==pet.PetTypeId}"
+                                        th:value="${p.Id}"></option>
+                                </select>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <div class="d-flex gap-3">
+                                    <button type="submit" class="btn btn-primary px-5">
+                                        <i class="bi bi-check-circle"></i> Update Pet
+                                    </button>
+                                    <a href="/pets" class="btn btn-outline-secondary px-5" style="border-radius: 25px;">
+                                        <i class="bi bi-arrow-left"></i> Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <label for="pettype" class="form-label">Type</label>
-                    <select name="PetTypeId" id="pettype" class="form-select">
-                        <option th:each="p : ${petTypes}" th:text="${p.Name}" th:selected="${p.Id==pet.PetTypeId}"
-                            th:value="${p.Id}"></option>
-                    </select>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-            </p>
+            </div>
+
         </div>
     </section>
 
